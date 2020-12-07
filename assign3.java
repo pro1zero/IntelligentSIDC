@@ -19,9 +19,7 @@ public class assign3 {
 			long currentKey = scan.nextLong();
 			sidc.add(currentKey, "FL-DOB-" + currentKey);
 		}
-		System.out.println(sidc.allKeys());
-		
-		System.out.println(sidc.rangeKey(11111111, 88888888));
+		System.out.println(sidc.getValues(11111111));
 		scan.close();
 	}
 }
@@ -41,7 +39,7 @@ class IntelligentSIDC{
 	}
 
 	public String allKeys() {
-		dll.print();
+//		dll.print();
 		return dll.loopOverKeys(currentSizeOfSystem);
 	}
 	
