@@ -37,15 +37,7 @@ public class assign3 {
 		System.out.println(sidc.allKeys());
 		sidc.remove(99999999);
 		System.out.println(sidc.allKeys());
-		sidc.add(99999999, ("FL-DOB-" + 99999999));
-		System.out.println(sidc.allKeys());
-		sidc.remove(99999999);
-		System.out.println(sidc.allKeys());
-		sidc.add(99999999, ("FL-DOB-" + 99999999));
-		System.out.println(sidc.allKeys());
-		sidc.remove(99999999);
-		System.out.println(sidc.allKeys());
-		sidc.add(99999999, ("FL-DOB-" + 99999999));
+		sidc.add(55555555, ("FL-DOB-" + 99999999));
 		System.out.println(sidc.allKeys());
 		sidc.remove(99999999);
 		System.out.println(sidc.allKeys());
@@ -77,7 +69,6 @@ class IntelligentSIDC{
 	public void upConversion() {
 		assignment3.IntelligentSIDC.DoublyLL.Node temp = dll.head;
 		while(temp != null) {
-			System.out.print(temp.key + "-->");
 			mtt.add(temp.key, "FL-DOB" + temp.key);
 			temp = temp.next;
 		}
@@ -88,7 +79,6 @@ class IntelligentSIDC{
 	public void downConversion(long key) {
 		assignment3.IntelligentSIDC.DoublyLL.Node temp = dll.head;
 		while(temp != null) {
-			System.out.print(temp.key + "-->");
 			ltt.addEntry(temp.key, ("FL-DOB" + temp.key));
 			temp = temp.next;
 		}
@@ -646,8 +636,7 @@ class IntelligentSIDC{
 		
 		public void removeEntry(long key) {
 			int indexToEntry = computeIndex(key);
-			boolean removed = arrayOfNodes[indexToEntry].remove(key);
-			System.out.println(key + " removed: " + removed);
+			arrayOfNodes[indexToEntry].remove(key);
 		}
 		
 		public void print() {
@@ -694,10 +683,8 @@ class IntelligentSIDC{
 			}
 			
 			public boolean remove(long key) {
-				System.out.println("executed!!!!!!!!!");
 				Entry temp = head;
 				if(temp == null)
-					System.out.println("null");
 				if(temp == null) return false;
 				if(head.key == key) {
 					head = head.next;
