@@ -1,7 +1,18 @@
 package assignment3;
 import java.io.*;
 import java.util.*;
+
+/**
+ * 
+ * @author Jenish Soni (40132415)
+ * @version 4.0
+ */
+
 public class assign3 {
+	
+	//The main method in the class assign3 is responsible to create
+	//an instance for the IntelligentSIDC and then call other methods
+	// as required.
 	public static void main(String[] args) throws IOException {
 		IntelligentSIDC sidc = new IntelligentSIDC();
 		sidc.setSIDCThreshold(0);
@@ -13,7 +24,7 @@ public class assign3 {
 			sidc.add(currentKey, "FL-DOB-" + currentKey);
 		}
 		System.out.println(sidc.allKeys());
-		System.out.println("VALUE: " + sidc.rangeKey(11111111,99999999));
+		System.out.println("VALUE: " + sidc.rangeKey(11111111, 99999999));
 		sidc.details();
 		br.close();
 	}
@@ -29,6 +40,8 @@ class IntelligentSIDC{
 	KeepTrack kt;
 	boolean justOnce;
 	
+	//the default constructor used to assign the default values to 
+	// all the data structures or variables used.
 	public IntelligentSIDC() {
 		currentSizeOfSystem = 0;
 		useTrees = false;
@@ -40,6 +53,11 @@ class IntelligentSIDC{
 		justOnce = true;
 	}
 	
+	/**
+	 * @param None
+	 * the method responsible to transform the HashTable array of linkedLists
+	 * to the AVL tree
+	 */
 	public void upConversion() {
 		assignment3.IntelligentSIDC.DoublyLL.Node temp = dll.head;
 		while(temp != null) {
@@ -48,6 +66,12 @@ class IntelligentSIDC{
 		}
 		ltt.reset();
 	}
+	/**
+	 * the method responsible to transform AVL tree
+	 * to the hashtable array of linked lists
+	 * @param key - during the downConversion we will miss one
+	 * addition in the hashtable, so we manually add that key.
+	 */
 	
 	public void downConversion(long key) {
 		assignment3.IntelligentSIDC.DoublyLL.Node temp = dll.head;
@@ -58,9 +82,15 @@ class IntelligentSIDC{
 		mtt.reset();
 	}
 
+	//This method keeps track of the ADT used and the current size of the system when called.
 	public void details() {
 		System.out.println("Size: " + currentSizeOfSystem + " UseTrees: " + useTrees);
 	}
+	
+	/**
+	 * all keys methods return the keys in a sorted sequence
+	 * @return string in a sorted manner.
+	 */
 	
 	public String allKeys() {
 		if(useTrees) {
@@ -71,6 +101,11 @@ class IntelligentSIDC{
 		return dll.loopOverKeys(currentSizeOfSystem);
 	}
 	
+	
+	/**
+	 * 
+	 * @param size - determines the correct ADT to use.
+	 */
 	public void setSIDCThreshold(int size) {
 		currentSizeOfSystem = size;
 		if(size >= 1000) {
@@ -78,6 +113,11 @@ class IntelligentSIDC{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param key - the key to be added
+	 * @param value - the corresponding value for the key.
+	 */
 	public void add(long key, String value) {
 //		long newKey = generate();
 		boolean isInserted = false;
@@ -99,6 +139,10 @@ class IntelligentSIDC{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param key - removes the key from the current ADT if found.
+	 */
 	public void remove(long key) {
 		boolean contains = kt.find(key) != null ? true : false;
 		if(!contains) return;
@@ -117,14 +161,31 @@ class IntelligentSIDC{
 		}
 	}
 	
+	/**
+	 * 
+	 * @param key1 - the lower bound of the range
+	 * @param key2 - the upper bound of th range
+	 * @return the number of keys in the system which are in the range.
+	 */
 	public int rangeKey(long key1, long key2) {
 		return dll.rangeKey(key1, key2);
 	}
 	
+	
+	/**
+	 * 
+	 * @return a new non-existing key.
+	 */
 	public long generate() {
 		generateHelper();
 		return currentKey;
 	}
+	
+	/**
+	 * 
+	 * @param key - the value whose value is to be found
+	 * @returns the value of the key if found else, "No such key found".
+	 */
 	
 	public String getValues(long key) {
 		assignment3.IntelligentSIDC.KeepTrack.Node alreadyContains = kt.find(key);
@@ -133,10 +194,20 @@ class IntelligentSIDC{
 		return "NO such key";
 	}
 	
+	/**
+	 * 
+	 * @param key - the key whose next key is to be found.
+	 * @return - the next key if found and -1 if not found or the last key if passed.
+	 */
 	public long nextKey(long key) {
 		return dll.nextKey(key);
 	}
 	
+	/**
+	 * 
+	 * @param key - the key whose prev key is to be found.
+	 * @return - the prev key if found and -1 if not found or the first key if passed.
+	 */
 	public long prevKey(long key) {
 		return dll.prevKey(key);
 	}
