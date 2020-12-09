@@ -1,20 +1,7 @@
 package assignment3;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 public class assign3 {
-//55555555
-//44444444
-//77777777
-//88888888
-//99999999
-//11111111
-//22222222
-//33333333
-//66666666
-//!
 	public static void main(String[] args) throws IOException {
 		IntelligentSIDC sidc = new IntelligentSIDC();
 		sidc.setSIDCThreshold(0);
@@ -26,21 +13,8 @@ public class assign3 {
 			sidc.add(currentKey, "FL-DOB-" + currentKey);
 		}
 		System.out.println(sidc.allKeys());
-		sidc.remove(99999999);
-		sidc.remove(11111111);
-		sidc.remove(22222222);
-		sidc.remove(44444444);
-		sidc.remove(33333333);
-		System.out.println(sidc.allKeys());
-		System.out.println(sidc.nextKey(55555555));
-		sidc.add(99999999, ("FL-DOB-" + 99999999));
-		System.out.println(sidc.allKeys());
-		sidc.remove(99999999);
-		System.out.println(sidc.allKeys());
-		sidc.add(55555555, ("FL-DOB-" + 99999999));
-		System.out.println(sidc.allKeys());
-		sidc.remove(99999999);
-		System.out.println(sidc.allKeys());
+		System.out.println("VALUE: " + sidc.rangeKey(11111111,99999999));
+		sidc.details();
 		br.close();
 	}
 }
@@ -73,7 +47,6 @@ class IntelligentSIDC{
 			temp = temp.next;
 		}
 		ltt.reset();
-		
 	}
 	
 	public void downConversion(long key) {
@@ -85,8 +58,11 @@ class IntelligentSIDC{
 		mtt.reset();
 	}
 
-	public String allKeys() {
+	public void details() {
 		System.out.println("Size: " + currentSizeOfSystem + " UseTrees: " + useTrees);
+	}
+	
+	public String allKeys() {
 		if(useTrees) {
 			System.out.println("Sorted using AVL");
 			return mtt.sort();
@@ -97,7 +73,7 @@ class IntelligentSIDC{
 	
 	public void setSIDCThreshold(int size) {
 		currentSizeOfSystem = size;
-		if(size >= 5) {
+		if(size >= 1000) {
 			useTrees = true;
 		}
 	}
@@ -133,7 +109,7 @@ class IntelligentSIDC{
 		else
 			ltt.removeEntry(key);
 		currentSizeOfSystem -= 1;
-		if(currentSizeOfSystem < 5 && !justOnce) {
+		if(currentSizeOfSystem < 1000 && !justOnce) {
 			ltt.removeEntry(key);
 			downConversion(key);
 			justOnce = true;
@@ -151,8 +127,10 @@ class IntelligentSIDC{
 	}
 	
 	public String getValues(long key) {
-		return mtt.getValue(key);
-//		return ltt.getValue(key);
+		assignment3.IntelligentSIDC.KeepTrack.Node alreadyContains = kt.find(key);
+		if(alreadyContains != null)
+			return "FL-DOB-" + key;
+		return "NO such key";
 	}
 	
 	public long nextKey(long key) {
@@ -166,8 +144,8 @@ class IntelligentSIDC{
 	public void generateHelper() {
 		Random rand = new Random();
 		long keyToGenerate = 10000000 + rand.nextInt(89999999);
-		boolean alreadyContains = dll.containsNodeWithKey(keyToGenerate);
-		if(alreadyContains) {
+		assignment3.IntelligentSIDC.KeepTrack.Node alreadyContains = kt.find(keyToGenerate);
+		if(alreadyContains != null) {
 			generateHelper();
 			return;
 		}
@@ -350,16 +328,15 @@ class IntelligentSIDC{
 		    }
 		    
 		    public String inOrderTraversal() {
-		    	sortedArray = "[";
+		    	sortedArray = "";
 		    	inOrderTraversalRecursion(root);
-		    	return sortedArray + "]";
+		    	return "";
 		    }
 		    
 		    public void inOrderTraversalRecursion(Node root) {
 		    	if(root == null) return;
 		    	inOrderTraversalRecursion(root.left);
 		    	System.out.println(root.key + ",");
-//		    	sortedArray = (sortedArray.equals("[")) ? sortedArray += root.key : sortedArray + ", " + root.key;
 		    	inOrderTraversalRecursion(root.right);
 		    }
 		}
